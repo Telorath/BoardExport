@@ -1,9 +1,19 @@
-package service;
+package service.factories;
 
 import controller.MainExportController;
+import service.CalendarDateService;
+import service.DateService;
+import service.EntryService;
+import service.ExportableService;
+import service.FormatService;
+import service.GithubService;
+import service.MainOutputService;
+import service.ZenhubService;
 import service.testing.TestRepoService;
+import view.output.ConsoleOutputTarget;
 
 public class ServiceFactory {
+
 	protected ObjectFactory objectFactory;
 	protected FormatService formatService;
 	protected GithubService githubService;
@@ -13,6 +23,12 @@ public class ServiceFactory {
 	protected MainExportController mainExportController;
 	protected TestRepoService repoService;
 	protected DateService dateService;
+	protected MainOutputService mainOutputService;
+
+	protected ServiceFactory() {
+		// All service factories are to be made by the service factory
+		// initializer.
+	}
 
 	public FormatService getFormatService() {
 		if (formatService == null) {
@@ -82,6 +98,25 @@ public class ServiceFactory {
 		return new CalendarDateService();
 	}
 
+	public MainOutputService getMainOutputService() {
+
+		if (mainOutputService == null) {
+			mainOutputService = initializeMainOutputService();
+		}
+
+		return mainOutputService;
+
+	}
+
+	protected MainOutputService initializeMainOutputService() {
+
+		MainOutputService service = new MainOutputService();
+
+		service.setOutputTarget(new ConsoleOutputTarget());
+
+		return service;
+	}
+
 	protected ZenhubService initializeZenhubService() {
 		return new ZenhubService();
 	}
@@ -100,6 +135,7 @@ public class ServiceFactory {
 		exportController.setFormatService(getFormatService());
 		exportController.setObjectFactory(getObjectFactory());
 		exportController.setIssueWriter(getObjectFactory().buildIssueWriter());
+		exportController.setMainOutputService(getMainOutputService());
 
 		return exportController;
 	}

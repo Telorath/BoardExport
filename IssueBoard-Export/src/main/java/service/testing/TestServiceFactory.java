@@ -1,8 +1,8 @@
 package service.testing;
 
 import service.DateService;
-import service.ObjectFactory;
-import service.ServiceFactory;
+import service.factories.ObjectFactory;
+import service.factories.ServiceFactory;
 
 public class TestServiceFactory extends ServiceFactory {
 

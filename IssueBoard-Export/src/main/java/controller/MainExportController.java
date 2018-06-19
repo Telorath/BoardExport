@@ -36,7 +36,8 @@ import service.ExportableService;
 import service.Finals;
 import service.FormatService;
 import service.IssueWriter;
-import service.ObjectFactory;
+import service.MainOutputService;
+import service.factories.ObjectFactory;
 
 public class MainExportController {
 
@@ -49,6 +50,8 @@ public class MainExportController {
 	private EntryService entryService;
 
 	private ObjectFactory objectFactory;
+
+	private MainOutputService mainOutputService;
 
 	private void writeByMilestone(ExportableDump exportableDump, String folderName, Format format, List<Filter> filters)
 			throws IOException {
@@ -83,7 +86,7 @@ public class MainExportController {
 
 	private ExportableDump loadData(RepoInfo repoInfo, ZenhubInfo zenhubInfo) throws IOException {
 
-		System.out.println("Loading Data");
+		mainOutputService.printLine("Loading Data");
 
 		GitController githubController = getObjectFactory().buildGitController();
 
@@ -134,6 +137,8 @@ public class MainExportController {
 
 	public void defaultControlFlow(List<Filter> filters) throws IOException {
 
+		mainOutputService.clear();
+
 		DataSourceService.loadTokens();
 		final String repoName = "vet360.pm";
 
@@ -153,7 +158,7 @@ public class MainExportController {
 
 		CsvFile.setOutputDelimiter("|");
 
-		System.out.println("Writing files");
+		mainOutputService.printLine("Writing files");
 
 		FilteredList<ExportableIssue> exportableList = new FilteredList<>(exportableDump.issues);
 
@@ -163,7 +168,7 @@ public class MainExportController {
 
 		writeList(exportableList, folderName, format, new EpicFilter(), new ExportableIssueComparator(), "/Epics.csv");
 
-		System.out.println("Finished writing");
+		mainOutputService.printLine("Finished writing");
 
 	}
 
@@ -205,5 +210,13 @@ public class MainExportController {
 
 	public void setObjectFactory(ObjectFactory objectFactory) {
 		this.objectFactory = objectFactory;
+	}
+
+	public MainOutputService getMainOutputService() {
+		return mainOutputService;
+	}
+
+	public void setMainOutputService(MainOutputService mainOutputService) {
+		this.mainOutputService = mainOutputService;
 	}
 }

@@ -4,7 +4,7 @@ import controller.testing.TestGitController;
 import controller.testing.TestZenController;
 import interfaces.GitController;
 import interfaces.ZenController;
-import service.ObjectFactory;
+import service.factories.ObjectFactory;
 
 public class TestObjectFactory extends ObjectFactory {
 	

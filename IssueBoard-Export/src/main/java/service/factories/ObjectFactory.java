@@ -1,9 +1,10 @@
-package service;
+package service.factories;
 
 import controller.GithubController;
 import controller.ZenhubController;
 import interfaces.GitController;
 import interfaces.ZenController;
+import service.IssueWriter;
 
 public class ObjectFactory {
 	private ServiceFactory serviceFactory;
