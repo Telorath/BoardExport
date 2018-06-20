@@ -1,0 +1,2 @@
+source System,addressLine1,CORRESPONDENCE,originatingSourceSystem,sourceSystemUser,addressType ,cityName,provinceName,countryName,zipCode5,createDate,effectiveStartDate,sourceDate,updateDate,confirmationDate,override
+VETSGOV,4222 Jefferson Oaks,RESIDENCE_CHOICE,VETSGOV,Maria,Domestic,Fairfax,VA,USA,22033,2017-07-14T13:38:09.669Z,2017-07-14T13:38:09.669Z,2017-07-14T13:38:09.669Z,2017-12-01T03:06:50.509Z,2016-06-14T13:38:09.669Z,TRUE
