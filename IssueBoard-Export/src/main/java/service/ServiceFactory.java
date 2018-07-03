@@ -12,7 +12,8 @@ public class ServiceFactory {
 	protected EntryService entryService;
 	protected MainExportController mainExportController;
 	protected TestRepoService repoService;
-	
+	protected DateService dateService;
+
 	public FormatService getFormatService() {
 		if (formatService == null) {
 			formatService = new FormatService();
@@ -35,16 +36,14 @@ public class ServiceFactory {
 	}
 
 	public ExportableService getExportableService() {
-		if (exportableService == null)
-		{
+		if (exportableService == null) {
 			exportableService = new ExportableService();
 		}
 		return exportableService;
 	}
 
 	public EntryService getEntryService() {
-		if (entryService == null)
-		{
+		if (entryService == null) {
 			entryService = new EntryService();
 		}
 		return entryService;
@@ -52,11 +51,11 @@ public class ServiceFactory {
 
 	public TestRepoService getTestRepoService() {
 		if (repoService == null) {
-			repoService = new TestRepoService();
+			repoService = new TestRepoService(getDateService());
 		}
 		return repoService;
 	}
-	
+
 	public ObjectFactory getObjectFactory() {
 		if (objectFactory == null) {
 			objectFactory = initializeObjectFactory();
@@ -64,20 +63,29 @@ public class ServiceFactory {
 		return objectFactory;
 	}
 
-	public MainExportController getMainExportController()
-	{
-		if (mainExportController == null)
-		{
+	public MainExportController getMainExportController() {
+		if (mainExportController == null) {
 			mainExportController = initializeMainExportController();
 		}
 		return mainExportController;
 	}
-	
-	protected ZenhubService initializeZenhubService()
-	{
+
+	public DateService getDateService() {
+		if (dateService == null) {
+			dateService = initializeDateService();
+		}
+		return dateService;
+
+	}
+
+	protected DateService initializeDateService() {
+		return new CalendarDateService();
+	}
+
+	protected ZenhubService initializeZenhubService() {
 		return new ZenhubService();
 	}
-	
+
 	protected ObjectFactory initializeObjectFactory() {
 		ObjectFactory factory = new ObjectFactory();
 		factory.setServiceFactory(this);
@@ -92,7 +100,7 @@ public class ServiceFactory {
 		exportController.setFormatService(getFormatService());
 		exportController.setObjectFactory(getObjectFactory());
 		exportController.setIssueWriter(getObjectFactory().buildIssueWriter());
-		
+
 		return exportController;
 	}
 

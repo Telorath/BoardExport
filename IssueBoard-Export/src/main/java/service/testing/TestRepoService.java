@@ -10,13 +10,16 @@ import model.issues.github.Milestone;
 import model.issues.github.User;
 import model.issues.interfaces.GitIssue;
 import model.issues.interfaces.ZenIssue;
+import service.DateService;
 
 public class TestRepoService {
 
 	private List<Milestone> milestones = new ArrayList<>();
 	private List<model.issues.exportable.Issue> exportables = new ArrayList<>();
+	private DateService dateService;
 
-	public TestRepoService() {
+	public TestRepoService(DateService dateService) {
+		this.dateService = dateService;
 		setupMilestones();
 		setupIssues();
 	}
@@ -44,13 +47,13 @@ public class TestRepoService {
 		issue.setTitle("Issue #" + (100 + milestoneNumber * totalIssuesPerMilestone + issueNumber));
 		issue.setState("Open");
 		issue.setHtml_url("Not a real issue");
-		
+
 		User user = new User();
-		
+
 		user.setLogin("TestUser");
-		
+
 		issue.setUser(user);
-		
+
 		List<Label> labelList = new ArrayList<>();
 
 		Label label;
@@ -61,17 +64,20 @@ public class TestRepoService {
 			label.setId(milestoneNumber * 10 + issueNumber);
 			label.setName("Epic");
 			labelList.add(label);
+			issue.setUpdated_at(dateService.getToday());
 			break;
 		case 2:
 			label = new Label();
 			label.setId(milestoneNumber * 10 + issueNumber);
 			label.setName("Bug");
 			labelList.add(label);
+			issue.setUpdated_at(dateService.getYesterday());
 			break;
 		default:
+			issue.setUpdated_at(dateService.getLastWeek());
 			break;
 		}
-
+		issue.setCreated_at(issue.getUpdated_at());
 		issue.setLabels(labelList);
 		return issue;
 	}
@@ -97,9 +103,9 @@ public class TestRepoService {
 				issue.setGitIssue(buildGitIssue(i, j, 3, milestones.get(i)));
 
 				issue.setZenIssue(buildZenIssue(i, j, 3));
-				
+
 				exportables.add(issue);
-				
+
 			}
 		}
 	}

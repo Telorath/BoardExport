@@ -198,13 +198,23 @@ public class Issue implements ExportableIssue {
 	}
 
 	@Override
-	public Date getUpdated_At() {
-		return gitIssue.getUpdated_At();
+	public Date getUpdated_at() {
+		return gitIssue.getUpdated_at();
 	}
 
 	@Override
-	public void setUpdated_At(Date updated_At) {
-		gitIssue.setUpdated_At(updated_At);
+	public void setUpdated_at(Date updated_At) {
+		gitIssue.setUpdated_at(updated_At);
+	}
+
+	@Override
+	public Date getCreated_at() {
+		return gitIssue.getCreated_at();
+	}
+
+	@Override
+	public void setCreated_at(Date created_at) {
+		gitIssue.setCreated_at(created_at);
 	}
 
 }

@@ -20,7 +20,8 @@ public class Issue implements GitIssue {
 	private List<User> assignees;
 	private Milestone milestone;
 	private Date updated_At;
-
+	private Date created_At;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -240,14 +241,23 @@ public class Issue implements GitIssue {
 	}
 
 	@Override
-	public Date getUpdated_At() {
+	public Date getUpdated_at() {
 		return updated_At;
 	}
 
 	@Override
-	public void setUpdated_At(Date updated_At) {
+	public void setUpdated_at(Date updated_At) {
 		this.updated_At = updated_At;
-		
+	}
+
+	@Override
+	public Date getCreated_at() {
+return created_At;
+	}
+
+	@Override
+	public void setCreated_at(Date created_at) {
+		created_At = created_at;
 	}
 
 }

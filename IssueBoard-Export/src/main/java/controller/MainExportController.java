@@ -50,13 +50,18 @@ public class MainExportController {
 
 	private ObjectFactory objectFactory;
 
-	private void writeByMilestone(ExportableDump exportableDump, String folderName, Format format) throws IOException {
+	private void writeByMilestone(ExportableDump exportableDump, String folderName, Format format, List<Filter> filters)
+			throws IOException {
 		IssueWriter writer = getIssueWriter();
 		for (GitMilestone milestone : exportableDump.milestoneList) {
 
 			FilteredList<ExportableIssue> issueList = new FilteredList<>(exportableDump.issues);
 
 			issueList.addFilter(new MilestoneFilter(milestone.getTitle()));
+
+			for (Filter filter : filters) {
+				issueList.addFilter(filter);
+			}
 
 			writer.writeMilestone(folderName, milestone, issueList.getFiltered(), format);
 
@@ -127,7 +132,7 @@ public class MainExportController {
 		writeList(writer, issues.getFiltered(), format);
 	}
 
-	public void defaultControlFlow() throws IOException {
+	public void defaultControlFlow(List<Filter> filters) throws IOException {
 
 		DataSourceService.loadTokens();
 		final String repoName = "vet360.pm";
@@ -152,7 +157,7 @@ public class MainExportController {
 
 		FilteredList<ExportableIssue> exportableList = new FilteredList<>(exportableDump.issues);
 
-		writeByMilestone(exportableDump, folderName, format);
+		writeByMilestone(exportableDump, folderName, format, filters);
 
 		writeList(exportableList, folderName, format, new BugFilter(), new ExportableSeverityComparator(), "/Bugs.csv");
 

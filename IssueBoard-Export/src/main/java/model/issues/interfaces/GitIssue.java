@@ -46,17 +46,21 @@ public interface GitIssue {
 	void setMilestone(Milestone milestone);
 
 	List<User> getAssignees();
-	
+
 	void setAssignees(List<User> assignees);
-	
+
 	Boolean getIsBug();
-	
+
 	String getPriority();
-	
+
 	String getSeverity();
-	
-	Date getUpdated_At();
-	
-	void setUpdated_At(Date updated_At);
-	
+
+	Date getCreated_at();
+
+	void setCreated_at(Date created_at);
+
+	Date getUpdated_at();
+
+	void setUpdated_at(Date updated_At);
+
 }
