@@ -5,7 +5,7 @@ import java.util.Date;
 import model.filtering.filters.Filter;
 import model.issues.interfaces.GitIssue;
 
-public class UpdatedAfterFilter implements Filter<GitIssue> {
+public class UpdatedAfterFilter<T extends GitIssue> implements Filter<T> {
 
 	private Date dateAfter;
 
@@ -14,7 +14,7 @@ public class UpdatedAfterFilter implements Filter<GitIssue> {
 	}
 
 	@Override
-	public boolean matchesFilter(GitIssue item) {
+	public boolean matchesFilter(T item) {
 		if (item.getUpdated_at() == null) {
 			return false;
 		}
