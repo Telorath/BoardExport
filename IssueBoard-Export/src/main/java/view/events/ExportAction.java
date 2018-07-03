@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import controller.MainExportController;
 import model.filtering.filters.Filter;
+import model.issues.exportable.ExportableIssue;
 
 public class ExportAction implements ActionListener {
 
@@ -20,7 +21,7 @@ public class ExportAction implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		try {
-			mainExportController.defaultControlFlow(new ArrayList<Filter>());
+			mainExportController.defaultControlFlow(new ArrayList<Filter<ExportableIssue>>());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

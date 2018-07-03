@@ -2,7 +2,6 @@ package view;
 
 import java.awt.EventQueue;
 
-import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;

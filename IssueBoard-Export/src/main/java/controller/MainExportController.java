@@ -53,8 +53,8 @@ public class MainExportController {
 
 	private MainOutputService mainOutputService;
 
-	private void writeByMilestone(ExportableDump exportableDump, String folderName, Format format, List<Filter> filters)
-			throws IOException {
+	private void writeByMilestone(ExportableDump exportableDump, String folderName, Format format,
+			List<Filter<ExportableIssue>> filters) throws IOException {
 		IssueWriter writer = getIssueWriter();
 		for (GitMilestone milestone : exportableDump.milestoneList) {
 
@@ -62,7 +62,7 @@ public class MainExportController {
 
 			issueList.addFilter(new MilestoneFilter(milestone.getTitle()));
 
-			for (Filter filter : filters) {
+			for (Filter<ExportableIssue> filter : filters) {
 				issueList.addFilter(filter);
 			}
 
@@ -135,7 +135,7 @@ public class MainExportController {
 		writeList(writer, issues.getFiltered(), format);
 	}
 
-	public void defaultControlFlow(List<Filter> filters) throws IOException {
+	public void defaultControlFlow(List<Filter<ExportableIssue>> filters) throws IOException {
 
 		mainOutputService.clear();
 
