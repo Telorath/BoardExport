@@ -85,10 +85,10 @@ public class MainWindow {
 	 */
 	private void linkEvents() {
 
-		windowState.exportButton
-				.addActionListener(new ExportAction(serviceFactory.getMainExportController(), windowState.filterList));
-
 		serviceFactory.getMainOutputService().setOutputTarget(new TextAreaOutput(windowState.mainOutput));
+
+		windowState.exportButton.addActionListener(new ExportAction(serviceFactory.getMainExportController(),
+				windowState.filterList, serviceFactory.getMainOutputService()));
 
 		windowState.filterList.setModel(new DefaultListModel<Filter<ExportableIssue>>());
 
@@ -127,12 +127,6 @@ public class MainWindow {
 		frmIssueBoardExporter.getContentPane().add(btnexportButton);
 		windowState.exportButton = btnexportButton;
 
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 193, 552, 104);
-		frmIssueBoardExporter.getContentPane().add(textArea);
-
-		windowState.mainOutput = textArea;
-
 		JMenuBar menuBar = new JMenuBar();
 		frmIssueBoardExporter.setJMenuBar(menuBar);
 
@@ -169,6 +163,15 @@ public class MainWindow {
 		frmIssueBoardExporter.getContentPane().add(removeFilterButton);
 
 		windowState.removeFilterButton = removeFilterButton;
+				
+				JScrollPane textAreaScrollPane = new JScrollPane();
+				textAreaScrollPane.setBounds(10, 193, 552, 104);
+				frmIssueBoardExporter.getContentPane().add(textAreaScrollPane);
+		
+				JTextArea textArea = new JTextArea();
+				textAreaScrollPane.setViewportView(textArea);
+				
+						windowState.mainOutput = textArea;
 
 	}
 }

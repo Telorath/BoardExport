@@ -22,28 +22,45 @@ public class ExportAction implements ActionListener {
 	
 	private OutputTarget errorOutput;
 
-	public ExportAction(MainExportController mainExportController, JList<Filter<ExportableIssue>> filterList) {
+	class Runner implements Runnable
+	{
+		public void run()
+		{
+			try {
+				ListModel<Filter<ExportableIssue>> filterModel = filterList.getModel();
+
+				List<Filter<ExportableIssue>> activeFilters = new ArrayList<>();
+
+				for (int i = 0; i < filterModel.getSize(); i++) {
+					activeFilters.add(filterModel.getElementAt(i));
+				}
+
+				mainExportController.defaultControlFlow(activeFilters);
+			} catch (IOException e1) {
+
+				errorOutput.printLine(e1.getMessage());
+				
+			}	
+		}
+	}
+	
+	public ExportAction(MainExportController mainExportController, JList<Filter<ExportableIssue>> filterList, OutputTarget errorOutput) {
 		this.mainExportController = mainExportController;
 		this.filterList = filterList;
+		this.errorOutput = errorOutput;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		try {
-			ListModel<Filter<ExportableIssue>> filterModel = filterList.getModel();
-
-			List<Filter<ExportableIssue>> activeFilters = new ArrayList<>();
-
-			for (int i = 0; i < filterModel.getSize(); i++) {
-				activeFilters.add(filterModel.getElementAt(i));
-			}
-
-			mainExportController.defaultControlFlow(activeFilters);
-		} catch (IOException e1) {
-
-			errorOutput.printLine(e1.getMessage());
-			
+		if (mainExportController.isWorking())
+		{
+			errorOutput.printLine("Already working!");
+		}
+		else
+		{
+			Runner runner = new Runner();
+			new Thread(runner).start();
 		}
 
 	}

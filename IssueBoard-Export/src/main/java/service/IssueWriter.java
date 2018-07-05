@@ -17,13 +17,10 @@ public class IssueWriter {
 
 	public void writeMilestone(String folderName, GitMilestone milestone, List<ExportableIssue> issues, Format format)
 			throws IOException {
-
-		CsvWriter writer = new CsvWriter(folderName + Finals.BY_MILESTONE + milestone.getTitle() + ".csv");
-
 		if (issues == null || issues.isEmpty()) {
-			writer.close();
 			return;
 		}
+		CsvWriter writer = new CsvWriter(folderName + Finals.BY_MILESTONE + milestone.getTitle() + ".csv");
 
 		issues.sort(new ExportableIssueComparator());
 
