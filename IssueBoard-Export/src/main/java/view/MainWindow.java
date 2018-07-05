@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -13,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import model.filtering.FilterGenerator;
 import model.filtering.filters.Filter;
 import model.issues.exportable.ExportableIssue;
 import service.ServiceFactoryInitializer;
@@ -37,7 +39,13 @@ public class MainWindow {
 		private JButton removeFilterButton;
 		private JList<Filter<ExportableIssue>> filterList;
 		private JTextField dateField;
-
+		private JComboBox<FilterGenerator<Filter<ExportableIssue>>> filterComboBox;
+		
+		public JComboBox getFilterComboBox()
+		{
+			return filterComboBox;
+		}
+		
 		public JTextField getDateField() {
 			return dateField;
 		}
@@ -137,7 +145,7 @@ public class MainWindow {
 		mnNewMenu.add(mntmCredentials);
 
 		JTextField textField = new JTextField();
-		textField.setBounds(130, 12, 294, 20);
+		textField.setBounds(396, 74, 166, 20);
 		frmIssueBoardExporter.getContentPane().add(textField);
 		textField.setColumns(10);
 
@@ -163,15 +171,21 @@ public class MainWindow {
 		frmIssueBoardExporter.getContentPane().add(removeFilterButton);
 
 		windowState.removeFilterButton = removeFilterButton;
-				
-				JScrollPane textAreaScrollPane = new JScrollPane();
-				textAreaScrollPane.setBounds(10, 193, 552, 104);
-				frmIssueBoardExporter.getContentPane().add(textAreaScrollPane);
-		
-				JTextArea textArea = new JTextArea();
-				textAreaScrollPane.setViewportView(textArea);
-				
-						windowState.mainOutput = textArea;
 
+		JScrollPane textAreaScrollPane = new JScrollPane();
+		textAreaScrollPane.setBounds(10, 193, 552, 104);
+		frmIssueBoardExporter.getContentPane().add(textAreaScrollPane);
+
+		JTextArea textArea = new JTextArea();
+		textAreaScrollPane.setViewportView(textArea);
+
+		windowState.mainOutput = textArea;
+
+		JComboBox filterComboBox = new JComboBox();
+		filterComboBox.setBounds(396, 43, 166, 20);
+		frmIssueBoardExporter.getContentPane().add(filterComboBox);
+
+		
+		
 	}
 }
