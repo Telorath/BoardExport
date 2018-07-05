@@ -21,4 +21,9 @@ public class UpdatedAfterFilter<T extends GitIssue> implements Filter<T> {
 		return item.getUpdated_at().after(dateAfter);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Updated After %s", dateAfter.toString());
+	}
+
 }

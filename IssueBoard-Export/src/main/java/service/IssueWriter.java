@@ -21,6 +21,7 @@ public class IssueWriter {
 		CsvWriter writer = new CsvWriter(folderName + Finals.BY_MILESTONE + milestone.getTitle() + ".csv");
 
 		if (issues == null || issues.isEmpty()) {
+			writer.close();
 			return;
 		}
 

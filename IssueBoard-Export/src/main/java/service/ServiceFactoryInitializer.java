@@ -1,7 +1,6 @@
 package service;
 
 import service.factories.ServiceFactory;
-import service.testing.TestServiceFactory;
 
 /**
  * Provides a single point of entry to the creation of a service factory to be
@@ -17,7 +16,7 @@ public class ServiceFactoryInitializer {
 
 	public ServiceFactory getServiceFactory() {
 		if (serviceFactory == null) {
-			serviceFactory = new TestServiceFactory();
+			serviceFactory = new ServiceFactory();
 		}
 		return serviceFactory;
 	}

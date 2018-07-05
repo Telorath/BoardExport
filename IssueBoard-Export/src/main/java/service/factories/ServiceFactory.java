@@ -25,11 +25,6 @@ public class ServiceFactory {
 	protected DateService dateService;
 	protected MainOutputService mainOutputService;
 
-	protected ServiceFactory() {
-		// All service factories are to be made by the service factory
-		// initializer.
-	}
-
 	public FormatService getFormatService() {
 		if (formatService == null) {
 			formatService = new FormatService();

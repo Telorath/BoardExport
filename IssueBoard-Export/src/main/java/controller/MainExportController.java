@@ -67,7 +67,7 @@ public class MainExportController {
 			}
 
 			writer.writeMilestone(folderName, milestone, issueList.getFiltered(), format);
-
+			
 		}
 	}
 
@@ -100,9 +100,7 @@ public class MainExportController {
 
 		List<ZenIssue> zenIssues = zenhubController.getZenIssues();
 
-		ExportableDump exportableDump = getExportableService().getExportables(gitDump, zenIssues);
-
-		return exportableDump;
+		return getExportableService().getExportables(gitDump, zenIssues);
 
 	}
 
@@ -122,11 +120,13 @@ public class MainExportController {
 	}
 
 	private void writeList(FilteredList<ExportableIssue> issues, String folderName, Format format,
-			Filter<ExportableIssue> filter, Comparator<ExportableIssue> comparator, String filename)
+			List<Filter<ExportableIssue>> filters, Comparator<ExportableIssue> comparator, String filename)
 			throws IOException {
 		issues.clearFilters();
 
-		issues.addFilter(filter);
+		for (Filter<ExportableIssue> filter : filters) {
+			issues.addFilter(filter);
+		}
 
 		issues.getFiltered().sort(comparator);
 
@@ -164,9 +164,17 @@ public class MainExportController {
 
 		writeByMilestone(exportableDump, folderName, format, filters);
 
-		writeList(exportableList, folderName, format, new BugFilter(), new ExportableSeverityComparator(), "/Bugs.csv");
+		List<Filter<ExportableIssue>> bugFilters = new ArrayList<>(filters);
 
-		writeList(exportableList, folderName, format, new EpicFilter(), new ExportableIssueComparator(), "/Epics.csv");
+		bugFilters.add(new BugFilter());
+
+		List<Filter<ExportableIssue>> epicFilters = new ArrayList<>(filters);
+
+		epicFilters.add(new EpicFilter());
+
+		writeList(exportableList, folderName, format, bugFilters, new ExportableSeverityComparator(), "/Bugs.csv");
+
+		writeList(exportableList, folderName, format, epicFilters, new ExportableIssueComparator(), "/Epics.csv");
 
 		mainOutputService.printLine("Finished writing");
 

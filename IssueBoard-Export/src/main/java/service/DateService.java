@@ -1,5 +1,6 @@
 package service;
 
+import java.text.ParseException;
 import java.util.Date;
 
 public interface DateService {
@@ -11,5 +12,7 @@ public interface DateService {
 	Date getYesterday();
 
 	Date getLastWeek();
+	
+	Date parseDate(String dateString) throws ParseException;
 
 }
