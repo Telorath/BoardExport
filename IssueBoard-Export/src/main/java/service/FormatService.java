@@ -12,6 +12,7 @@ public class FormatService {
 		format.getPropertyList().add(new Property("title"));
 		format.getPropertyList().add(new Property("pipeline"));
 		format.getPropertyList().add(new Property("state"));
+		format.getPropertyList().add(new Property("body", "no body"));
 		format.getPropertyList().add(new Property("user"));
 		format.getPropertyList().add(new Property("assignees"));
 		format.getPropertyList().add(new Property("labels"));

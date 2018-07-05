@@ -47,7 +47,7 @@ public class TestRepoService {
 		issue.setTitle("Issue #" + (100 + milestoneNumber * totalIssuesPerMilestone + issueNumber));
 		issue.setState("Open");
 		issue.setHtml_url("Not a real issue");
-
+		issue.setBody("This issue has a long body. \nDon't worry about it maybe.");
 		User user = new User();
 
 		user.setLogin("TestUser");

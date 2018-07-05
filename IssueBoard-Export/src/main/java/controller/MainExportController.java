@@ -53,6 +53,13 @@ public class MainExportController {
 
 	private MainOutputService mainOutputService;
 
+	private boolean working = false;
+	
+	public synchronized boolean isWorking()
+	{
+		return working;
+	}
+	
 	private void writeByMilestone(ExportableDump exportableDump, String folderName, Format format,
 			List<Filter<ExportableIssue>> filters) throws IOException {
 		IssueWriter writer = getIssueWriter();
@@ -137,6 +144,8 @@ public class MainExportController {
 
 	public void defaultControlFlow(List<Filter<ExportableIssue>> filters) throws IOException {
 
+		working = true;
+		
 		mainOutputService.clear();
 
 		DataSourceService.loadTokens();
@@ -156,7 +165,7 @@ public class MainExportController {
 
 		ExportableDump exportableDump = loadData(repoInfo, zenInfo);
 
-		CsvFile.setOutputDelimiter("|");
+		CsvFile.setOutputDelimiter(",");
 
 		mainOutputService.printLine("Writing files");
 
@@ -178,6 +187,8 @@ public class MainExportController {
 
 		mainOutputService.printLine("Finished writing");
 
+		working = false;
+		
 	}
 
 	public IssueWriter getIssueWriter() {

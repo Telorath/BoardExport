@@ -51,6 +51,19 @@ public class EntryService {
 
 		entry.addProperty("state", issue.getState());
 
+		StringBuilder bodyString = new StringBuilder();
+		
+		bodyString.append(issue.getBody().replaceAll("\"", ""));
+		
+		if (bodyString.length() > 1000)
+		{
+			bodyString.setLength(1000);
+			
+			bodyString.append("(Truncated for Length, see link)");
+		}
+		
+		entry.addProperty("body", bodyString.toString());
+		
 		String issueType;
 
 		if (issue.getIs_epic()) {
