@@ -40,7 +40,7 @@ public class AddUpdatedAfterFilterAction implements ActionListener {
 					.getModel();
 			oldFilters.addElement(new UpdatedAfterFilter<ExportableIssue>(dateAfter));
 		} catch (ParseException e1) {
-			errorOutput.printLine(String.format("The string %s cannot be converted to a date!", dateField.getText()));
+			errorOutput.printLine(String.format("The string \"%s\" cannot be converted to a date! please use the format \"%s\"", dateField.getText(), "MM/DD/YYYY"));
 		}
 	}
 
