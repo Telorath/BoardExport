@@ -96,6 +96,11 @@ public class EntryService {
 
 		entry.addProperty("url", issue.getHtml_url());
 
+		entry.addProperty("created_at", String.format("created at %s", issue.getCreated_at().toString()));
+
+		entry.addProperty("updated_at", String.format("updated at %s", issue.getUpdated_at().toString()));
+		
+		
 		return entry;
 	}
 

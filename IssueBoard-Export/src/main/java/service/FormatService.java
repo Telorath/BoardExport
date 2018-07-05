@@ -22,7 +22,8 @@ public class FormatService {
 		format.getPropertyList().add(new Property("estimate", "no estimate"));
 		format.getPropertyList().add(new Property("issueType"));
 		format.getPropertyList().add(new Property("url"));
-
+		format.getPropertyList().add(new Property("created_at"));
+		format.getPropertyList().add(new Property("updated_at"));
 		return format;
 	}
 
