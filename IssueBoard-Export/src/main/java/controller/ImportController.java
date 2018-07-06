@@ -5,6 +5,7 @@ import java.io.IOException;
 import interfaces.GitController;
 import interfaces.ZenController;
 import model.RepoInfo;
+import model.ZenDump;
 import model.ZenhubInfo;
 import service.ExportableService;
 import service.LocalDataService;
@@ -30,10 +31,18 @@ public class ImportController {
 
 		localDataService.setGitDump(githubController.getGitData());
 
-		localDataService.setZenDump(zenhubController.getZenIssues());
+		ZenDump zenDump = new ZenDump();
 
+		zenDump.setZenIssues(zenhubController.getZenIssues());
+		
+		localDataService.setZenDump(zenDump);
+
+		zenDump.setReleases(zenhubController.getZenReleases());
+		
+		zenDump.correlateReleases();
+		
 		localDataService.setExportableDump(getExportableService().getExportables(getLocalDataService().getGitDump(),
-				getLocalDataService().getZenDump()));
+				getLocalDataService().getZenDump().getZenIssues()));
 
 	}
 

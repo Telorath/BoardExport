@@ -43,14 +43,14 @@ public class EntryService {
 
 		entry.addProperty("number", issue.getNumber().toString());
 
-		entry.addProperty("title", issue.getTitle());
+		entry.addProperty("title", issue.getTitle().replaceAll("\"", ""));
 
 		entry.addProperty("pipeline", issue.getPipeline());
 
 		entry.addProperty("user", issue.getUser().getLogin());
 
 		entry.addProperty("state", issue.getState());
-
+		
 		StringBuilder bodyString = new StringBuilder();
 		
 		bodyString.append(issue.getBody().replaceAll("\"", ""));
@@ -86,6 +86,11 @@ public class EntryService {
 
 		entry.addProperty("labels", labelString);
 
+		if (issue.getRelease() != null)
+		{
+			entry.addProperty("release", issue.getRelease().getTitle());
+		}
+		
 		if (issue.getMilestone() != null) {
 			entry.addProperty("milestone", issue.getMilestone().getTitle());
 		}

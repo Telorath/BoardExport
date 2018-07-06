@@ -9,6 +9,7 @@ import model.issues.github.User;
 import model.issues.interfaces.GitIssue;
 import model.issues.interfaces.ZenIssue;
 import model.issues.zenhub.Estimate;
+import model.issues.zenhub.Release;
 
 public class Issue implements ExportableIssue {
 
@@ -215,6 +216,16 @@ public class Issue implements ExportableIssue {
 	@Override
 	public void setCreated_at(Date created_at) {
 		gitIssue.setCreated_at(created_at);
+	}
+
+	@Override
+	public Release getRelease() {
+		return zenIssue.getRelease();
+	}
+
+	@Override
+	public void setRelease(Release release) {
+		zenIssue.setRelease(release);
 	}
 
 }

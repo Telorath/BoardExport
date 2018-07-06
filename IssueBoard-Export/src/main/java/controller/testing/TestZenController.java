@@ -1,11 +1,13 @@
 package controller.testing;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import interfaces.ZenController;
 import model.ZenhubInfo;
 import model.issues.interfaces.ZenIssue;
+import model.issues.zenhub.Release;
 import service.testing.TestRepoService;
 
 public class TestZenController implements ZenController {
@@ -33,6 +35,11 @@ public class TestZenController implements ZenController {
 
 	public void setRepo(TestRepoService repo) {
 		this.repo = repo;
+	}
+
+	@Override
+	public List<Release> getZenReleases() throws IOException {
+		return new ArrayList<>();
 	}
 
 }

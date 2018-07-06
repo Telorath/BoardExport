@@ -11,6 +11,7 @@ public class Issue implements ZenIssue {
 	private Estimate estimate;
 	private Integer position;
 	private String pipeline;
+	private Release release;
 
 	/*
 	 * (non-Javadoc)
@@ -94,5 +95,15 @@ public class Issue implements ZenIssue {
 	public void setPipeline(String pipeline) {
 		this.pipeline = pipeline;
 
+	}
+
+	@Override
+	public Release getRelease() {
+		return release;
+	}
+
+	@Override
+	public void setRelease(Release release) {
+		this.release = release;
 	}
 }

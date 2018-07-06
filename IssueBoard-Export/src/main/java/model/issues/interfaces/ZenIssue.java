@@ -1,6 +1,7 @@
 package model.issues.interfaces;
 
 import model.issues.zenhub.Estimate;
+import model.issues.zenhub.Release;
 
 public interface ZenIssue {
 
@@ -24,4 +25,7 @@ public interface ZenIssue {
 	
 	void setPipeline(String pipeline);
 	
+	Release getRelease();
+	
+	void setRelease(Release release);
 }
