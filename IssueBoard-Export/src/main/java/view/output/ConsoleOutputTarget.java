@@ -2,7 +2,7 @@ package view.output;
 
 import java.io.IOException;
 
-public class ConsoleOutputTarget implements OutputTarget {
+public class ConsoleOutputTarget implements OutputTarget<String> {
 
 	@Override
 	public void clear() {
@@ -16,7 +16,7 @@ public class ConsoleOutputTarget implements OutputTarget {
 	}
 
 	@Override
-	public void printLine(String newln) {
+	public void write(String newln) {
 		System.out.println(newln);
 	}
 

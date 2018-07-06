@@ -7,6 +7,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import exceptions.DateParseException;
+
 public class CalendarDateService implements DateService {
 
 	public static final Long ONE_SECOND = 1000L;
@@ -52,8 +54,12 @@ public class CalendarDateService implements DateService {
 		return dateFormat.parse(dateString);
 	}
 
-	public Date parseDate(String dateString) throws ParseException {
-		return parseMMDDYYYY(dateString);
+	public Date parseDate(String dateString) throws DateParseException {
+		try {
+			return parseMMDDYYYY(dateString);
+		} catch (ParseException e) {
+			throw new DateParseException(dateString);
+		}
 	}
 
 }

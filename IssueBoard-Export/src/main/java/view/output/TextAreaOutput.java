@@ -2,7 +2,7 @@ package view.output;
 
 import javax.swing.JTextArea;
 
-public class TextAreaOutput implements OutputTarget {
+public class TextAreaOutput implements OutputTarget<String> {
 
 	JTextArea jTextArea;
 
@@ -16,7 +16,7 @@ public class TextAreaOutput implements OutputTarget {
 	}
 
 	@Override
-	public void printLine(String newln) {
+	public void write(String newln) {
 		jTextArea.setText(jTextArea.getText() + newln + "\n");
 	}
 

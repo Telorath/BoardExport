@@ -1,9 +1,9 @@
 package view.output;
 
-public interface OutputTarget {
+public interface OutputTarget<T> {
 	
 	void clear();
 	
-	void printLine(String newln);
+	void write(T output);
 	
 }

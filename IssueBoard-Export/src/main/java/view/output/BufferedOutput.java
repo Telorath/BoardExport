@@ -1,14 +1,14 @@
 package view.output;
 
-public class BufferedOutput implements BufferedOutputTarget {
+public class BufferedOutput implements BufferedOutputTarget<String> {
 
-	private OutputTarget outputTarget;
+	private OutputTarget<String> outputTarget;
 
 	private StringBuilder stringBuilder = new StringBuilder();
 
 	@Override
 	public void update() {
-		outputTarget.printLine(stringBuilder.substring(0, stringBuilder.length() - 1));
+		outputTarget.write(stringBuilder.substring(0, stringBuilder.length() - 1));
 		stringBuilder.setLength(0);
 	}
 
@@ -19,7 +19,7 @@ public class BufferedOutput implements BufferedOutputTarget {
 	}
 
 	@Override
-	public void printLine(String newln) {
+	public void write(String newln) {
 		stringBuilder.append(newln + "\n");
 	}
 

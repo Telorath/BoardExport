@@ -93,7 +93,7 @@ public class MainExportController {
 
 	private ExportableDump loadData(RepoInfo repoInfo, ZenhubInfo zenhubInfo) throws IOException {
 
-		mainOutputService.printLine("Loading Data");
+		mainOutputService.write("Loading Data");
 
 		GitController githubController = getObjectFactory().buildGitController();
 
@@ -167,7 +167,7 @@ public class MainExportController {
 
 		CsvFile.setOutputDelimiter(",");
 
-		mainOutputService.printLine("Writing files");
+		mainOutputService.write("Writing files");
 
 		FilteredList<ExportableIssue> exportableList = new FilteredList<>(exportableDump.issues);
 
@@ -185,7 +185,7 @@ public class MainExportController {
 
 		writeList(exportableList, folderName, format, epicFilters, new ExportableIssueComparator(), "/Epics.csv");
 
-		mainOutputService.printLine("Finished writing");
+		mainOutputService.write("Finished writing");
 
 		working = false;
 		

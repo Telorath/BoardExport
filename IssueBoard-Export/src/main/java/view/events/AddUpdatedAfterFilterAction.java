@@ -11,6 +11,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JTextField;
 
+import exceptions.DateParseException;
 import model.filtering.filters.Filter;
 import model.issues.exportable.ExportableIssue;
 import model.issues.github.filters.UpdatedAfterFilter;
@@ -18,7 +19,7 @@ import service.DateService;
 import view.output.OutputTarget;
 
 public class AddUpdatedAfterFilterAction implements ActionListener {
-
+	
 	private JList<Filter<ExportableIssue>> filterList;
 	private JTextField dateField;
 	private OutputTarget errorOutput;
@@ -39,8 +40,8 @@ public class AddUpdatedAfterFilterAction implements ActionListener {
 			DefaultListModel<Filter<ExportableIssue>> oldFilters = (DefaultListModel<Filter<ExportableIssue>>) filterList
 					.getModel();
 			oldFilters.addElement(new UpdatedAfterFilter<ExportableIssue>(dateAfter));
-		} catch (ParseException e1) {
-			errorOutput.printLine(String.format("The string \"%s\" cannot be converted to a date! please use the format \"%s\"", dateField.getText(), "MM/DD/YYYY"));
+		} catch (DateParseException e1) {
+			errorOutput.write(String.format("The string \"%s\" cannot be converted to a date! please use the format \"%s\"", dateField.getText(), "MM/DD/YYYY"));
 		}
 	}
 

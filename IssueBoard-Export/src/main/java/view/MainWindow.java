@@ -17,11 +17,15 @@ import javax.swing.JTextField;
 import model.filtering.FilterGenerator;
 import model.filtering.filters.Filter;
 import model.issues.exportable.ExportableIssue;
+import model.issues.github.filters.generators.UpdatedAfterFilterGenerator;
 import service.ServiceFactoryInitializer;
 import service.factories.ServiceFactory;
-import view.events.AddUpdatedAfterFilterAction;
+import view.events.AddFilterAction;
 import view.events.ExportAction;
 import view.events.RemoveFilterAction;
+import view.input.ComboBoxInputSource;
+import view.input.TextFieldInputSource;
+import view.io.JListIO;
 import view.output.TextAreaOutput;
 
 public class MainWindow {
@@ -38,16 +42,15 @@ public class MainWindow {
 		private JButton addFilterButton;
 		private JButton removeFilterButton;
 		private JList<Filter<ExportableIssue>> filterList;
-		private JTextField dateField;
-		private JComboBox<FilterGenerator<Filter<ExportableIssue>>> filterComboBox;
-		
-		public JComboBox getFilterComboBox()
-		{
+		private JTextField FilterField;
+		private JComboBox<FilterGenerator<ExportableIssue>> filterComboBox;
+
+		public JComboBox<FilterGenerator<ExportableIssue>> getFilterComboBox() {
 			return filterComboBox;
 		}
-		
+
 		public JTextField getDateField() {
-			return dateField;
+			return FilterField;
 		}
 
 		public JButton getExportButton() {
@@ -88,6 +91,14 @@ public class MainWindow {
 		});
 	}
 
+	private void setupFilterComboBox() {
+
+		windowState.filterComboBox.addItem(new UpdatedAfterFilterGenerator<ExportableIssue>(
+				new TextFieldInputSource(windowState.FilterField, true), null));
+		;
+
+	}
+
 	/**
 	 * Links all events to their respective buttons;
 	 */
@@ -100,11 +111,12 @@ public class MainWindow {
 
 		windowState.filterList.setModel(new DefaultListModel<Filter<ExportableIssue>>());
 
-		windowState.addFilterButton.addActionListener(new AddUpdatedAfterFilterAction(windowState.filterList,
-				windowState.dateField, serviceFactory.getMainOutputService(), serviceFactory.getDateService()));
+		windowState.addFilterButton
+				.addActionListener(new AddFilterAction(new JListIO<Filter<ExportableIssue>>(windowState.filterList),
+						new ComboBoxInputSource<>(windowState.filterComboBox), serviceFactory.getMainOutputService()));
 
 		windowState.removeFilterButton.addActionListener(
-				new RemoveFilterAction(windowState.filterList, serviceFactory.getMainOutputService()));
+				new RemoveFilterAction(new JListIO<>(windowState.filterList), serviceFactory.getMainOutputService()));
 	}
 
 	/**
@@ -113,6 +125,7 @@ public class MainWindow {
 	public MainWindow() {
 		initialize();
 		linkEvents();
+		setupFilterComboBox();
 	}
 
 	/**
@@ -149,7 +162,7 @@ public class MainWindow {
 		frmIssueBoardExporter.getContentPane().add(textField);
 		textField.setColumns(10);
 
-		windowState.dateField = textField;
+		windowState.FilterField = textField;
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 45, 277, 78);
@@ -181,11 +194,11 @@ public class MainWindow {
 
 		windowState.mainOutput = textArea;
 
-		JComboBox filterComboBox = new JComboBox();
+		JComboBox<FilterGenerator<ExportableIssue>> filterComboBox = new JComboBox<>();
 		filterComboBox.setBounds(396, 43, 166, 20);
 		frmIssueBoardExporter.getContentPane().add(filterComboBox);
 
-		
-		
+		windowState.filterComboBox = filterComboBox;
+
 	}
 }

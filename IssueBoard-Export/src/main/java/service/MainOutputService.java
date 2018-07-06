@@ -10,14 +10,14 @@ import view.output.OutputTarget;
  *
  */
 
-public class MainOutputService implements OutputTarget {
-	private OutputTarget outputTarget;
+public class MainOutputService implements OutputTarget<String> {
+	private OutputTarget<String> outputTarget;
 
-	public OutputTarget getOutputTarget() {
+	public OutputTarget<String> getOutputTarget() {
 		return outputTarget;
 	}
 
-	public void setOutputTarget(OutputTarget outputTarget) {
+	public void setOutputTarget(OutputTarget<String> outputTarget) {
 		this.outputTarget = outputTarget;
 	}
 
@@ -27,8 +27,8 @@ public class MainOutputService implements OutputTarget {
 	}
 
 	@Override
-	public void printLine(String newln) {
-		outputTarget.printLine(newln);
+	public void write(String newln) {
+		outputTarget.write(newln);
 	}
 
 }

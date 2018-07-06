@@ -38,7 +38,7 @@ public class ExportAction implements ActionListener {
 				mainExportController.defaultControlFlow(activeFilters);
 			} catch (IOException e1) {
 
-				errorOutput.printLine(e1.getMessage());
+				errorOutput.write(e1.getMessage());
 				
 			}	
 		}
@@ -55,7 +55,7 @@ public class ExportAction implements ActionListener {
 
 		if (mainExportController.isWorking())
 		{
-			errorOutput.printLine("Already working!");
+			errorOutput.write("Already working!");
 		}
 		else
 		{

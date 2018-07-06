@@ -8,7 +8,7 @@ package view.output;
  *
  */
 
-public interface BufferedOutputTarget extends OutputTarget {
+public interface BufferedOutputTarget<T> extends OutputTarget<T> {
 
 	public void update();
 
