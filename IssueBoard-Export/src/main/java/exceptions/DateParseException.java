@@ -9,7 +9,7 @@ public class DateParseException extends Exception {
 
 	public DateParseException(String dateString)
 	{
-		super(String.format("The date \"%s\" could not be formatted. Please format as \"%s\"", dateString, "MM-DD-YYYY"));
+		super(String.format("The date \"%s\" could not be formatted. Please format as \"%s\"", dateString, "MM/DD/YYYY"));
 	}
 	
 }

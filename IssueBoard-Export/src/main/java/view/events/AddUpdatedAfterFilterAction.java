@@ -19,7 +19,7 @@ import service.DateService;
 import view.output.OutputTarget;
 
 public class AddUpdatedAfterFilterAction implements ActionListener {
-	
+
 	private JList<Filter<ExportableIssue>> filterList;
 	private JTextField dateField;
 	private OutputTarget errorOutput;
@@ -41,7 +41,9 @@ public class AddUpdatedAfterFilterAction implements ActionListener {
 					.getModel();
 			oldFilters.addElement(new UpdatedAfterFilter<ExportableIssue>(dateAfter));
 		} catch (DateParseException e1) {
-			errorOutput.write(String.format("The string \"%s\" cannot be converted to a date! please use the format \"%s\"", dateField.getText(), "MM/DD/YYYY"));
+			errorOutput.write(
+					String.format("The string \"%s\" cannot be converted to a date! please use the format \"%s\"",
+							dateField.getText(), "MM/DD/YYYY"));
 		}
 	}
 

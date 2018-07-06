@@ -2,14 +2,14 @@ package model.issues.github.filters.generators;
 
 import exceptions.DateParseException;
 import exceptions.FilterCreationException;
-import model.filtering.FilterGenerator;
+import model.filtering.AbstractFilterGenerator;
 import model.filtering.filters.Filter;
 import model.issues.github.filters.UpdatedAfterFilter;
 import model.issues.interfaces.GitIssue;
 import service.DateService;
 import view.input.InputSource;
 
-public class UpdatedAfterFilterGenerator<T extends GitIssue> extends FilterGenerator<T> {
+public class UpdatedAfterFilterGenerator<T extends GitIssue> extends AbstractFilterGenerator<T> {
 	
 	InputSource<String> inputSource;
 	DateService dateService;

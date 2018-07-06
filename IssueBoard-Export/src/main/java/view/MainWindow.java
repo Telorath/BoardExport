@@ -14,9 +14,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import model.filtering.AbstractFilterGenerator;
 import model.filtering.FilterGenerator;
 import model.filtering.filters.Filter;
 import model.issues.exportable.ExportableIssue;
+import model.issues.github.filters.generators.CreatedAfterFilterGenerator;
+import model.issues.github.filters.generators.LabelFilterGenerator;
 import model.issues.github.filters.generators.UpdatedAfterFilterGenerator;
 import service.ServiceFactoryInitializer;
 import service.factories.ServiceFactory;
@@ -93,9 +96,15 @@ public class MainWindow {
 
 	private void setupFilterComboBox() {
 
-		windowState.filterComboBox.addItem(new UpdatedAfterFilterGenerator<ExportableIssue>(
-				new TextFieldInputSource(windowState.FilterField, true), null));
-		;
+		TextFieldInputSource filterInputText = new TextFieldInputSource(windowState.FilterField, true);
+
+		windowState.filterComboBox.addItem(
+				new UpdatedAfterFilterGenerator<ExportableIssue>(filterInputText, serviceFactory.getDateService()));
+
+		windowState.filterComboBox.addItem(
+				new CreatedAfterFilterGenerator<ExportableIssue>(filterInputText, serviceFactory.getDateService()));
+
+		windowState.filterComboBox.addItem(new LabelFilterGenerator<ExportableIssue>(filterInputText));
 
 	}
 
@@ -124,8 +133,8 @@ public class MainWindow {
 	 */
 	public MainWindow() {
 		initialize();
-		linkEvents();
 		setupFilterComboBox();
+		linkEvents();
 	}
 
 	/**

@@ -18,4 +18,9 @@ public class CreatedAfterFilter<T extends GitIssue> implements Filter<T> {
 		return item.getCreated_at().after(dateAfter);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Created After %s", dateAfter.toString());
+	}
+	
 }

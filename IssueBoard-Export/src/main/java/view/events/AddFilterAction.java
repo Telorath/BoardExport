@@ -7,9 +7,7 @@ import exceptions.FilterCreationException;
 import model.filtering.FilterGenerator;
 import model.filtering.filters.Filter;
 import model.issues.exportable.ExportableIssue;
-import service.DateService;
 import view.input.InputSource;
-import view.io.IOListTarget;
 import view.output.OutputTarget;
 
 public class AddFilterAction implements ActionListener {
