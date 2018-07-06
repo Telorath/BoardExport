@@ -14,9 +14,6 @@ import csvFormatter.model.Entry;
 import csvFormatter.model.Format;
 import csvFormatter.service.CsvFile;
 import csvFormatter.service.CsvWriter;
-import interfaces.GitController;
-import interfaces.ZenController;
-import model.GitDump;
 import model.RepoInfo;
 import model.ZenhubInfo;
 import model.filtering.FilteredList;
@@ -29,23 +26,24 @@ import model.issues.exportable.filters.BugFilter;
 import model.issues.exportable.filters.EpicFilter;
 import model.issues.exportable.filters.MilestoneFilter;
 import model.issues.interfaces.GitMilestone;
-import model.issues.interfaces.ZenIssue;
 import service.DataSourceService;
 import service.EntryService;
-import service.ExportableService;
 import service.Finals;
 import service.FormatService;
 import service.IssueWriter;
+import service.LocalDataService;
 import service.MainOutputService;
 import service.factories.ObjectFactory;
 
 public class MainExportController {
 
+	private LocalDataService localDataService;
+
+	private ImportController importController;
+
 	private IssueWriter issueWriter;
 
 	private FormatService formatService;
-
-	private ExportableService exportableService;
 
 	private EntryService entryService;
 
@@ -54,12 +52,11 @@ public class MainExportController {
 	private MainOutputService mainOutputService;
 
 	private boolean working = false;
-	
-	public synchronized boolean isWorking()
-	{
+
+	public synchronized boolean isWorking() {
 		return working;
 	}
-	
+
 	private void writeByMilestone(ExportableDump exportableDump, String folderName, Format format,
 			List<Filter<ExportableIssue>> filters) throws IOException {
 		IssueWriter writer = getIssueWriter();
@@ -74,7 +71,7 @@ public class MainExportController {
 			}
 
 			writer.writeMilestone(folderName, milestone, issueList.getFiltered(), format);
-			
+
 		}
 	}
 
@@ -93,21 +90,11 @@ public class MainExportController {
 
 	private ExportableDump loadData(RepoInfo repoInfo, ZenhubInfo zenhubInfo) throws IOException {
 
-		mainOutputService.write("Loading Data");
+		if (getLocalDataService().getExportableDump() == null) {
+			getImportController().loadData(repoInfo, zenhubInfo);
+		}
 
-		GitController githubController = getObjectFactory().buildGitController();
-
-		githubController.setRepoInfo(repoInfo);
-
-		ZenController zenhubController = getObjectFactory().buildZenController();
-
-		zenhubController.setZenhubInfo(zenhubInfo);
-
-		GitDump gitDump = githubController.getGitData();
-
-		List<ZenIssue> zenIssues = zenhubController.getZenIssues();
-
-		return getExportableService().getExportables(gitDump, zenIssues);
+		return getLocalDataService().getExportableDump();
 
 	}
 
@@ -145,7 +132,7 @@ public class MainExportController {
 	public void defaultControlFlow(List<Filter<ExportableIssue>> filters) throws IOException {
 
 		working = true;
-		
+
 		mainOutputService.clear();
 
 		DataSourceService.loadTokens();
@@ -188,7 +175,7 @@ public class MainExportController {
 		mainOutputService.write("Finished writing");
 
 		working = false;
-		
+
 	}
 
 	public IssueWriter getIssueWriter() {
@@ -205,14 +192,6 @@ public class MainExportController {
 
 	public void setFormatService(FormatService formatService) {
 		this.formatService = formatService;
-	}
-
-	public ExportableService getExportableService() {
-		return exportableService;
-	}
-
-	public void setExportableService(ExportableService exportableService) {
-		this.exportableService = exportableService;
 	}
 
 	public EntryService getEntryService() {
@@ -237,5 +216,21 @@ public class MainExportController {
 
 	public void setMainOutputService(MainOutputService mainOutputService) {
 		this.mainOutputService = mainOutputService;
+	}
+
+	public LocalDataService getLocalDataService() {
+		return localDataService;
+	}
+
+	public void setLocalDataService(LocalDataService localDataService) {
+		this.localDataService = localDataService;
+	}
+
+	public ImportController getImportController() {
+		return importController;
+	}
+
+	public void setImportController(ImportController importController) {
+		this.importController = importController;
 	}
 }

@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import model.filtering.AbstractFilterGenerator;
 import model.filtering.FilterGenerator;
 import model.filtering.filters.Filter;
 import model.issues.exportable.ExportableIssue;

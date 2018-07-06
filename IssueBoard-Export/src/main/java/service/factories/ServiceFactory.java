@@ -1,5 +1,6 @@
 package service.factories;
 
+import controller.ImportController;
 import controller.MainExportController;
 import service.CalendarDateService;
 import service.DateService;
@@ -7,6 +8,7 @@ import service.EntryService;
 import service.ExportableService;
 import service.FormatService;
 import service.GithubService;
+import service.LocalDataService;
 import service.MainOutputService;
 import service.ZenhubService;
 import service.testing.TestRepoService;
@@ -24,6 +26,8 @@ public class ServiceFactory {
 	protected TestRepoService repoService;
 	protected DateService dateService;
 	protected MainOutputService mainOutputService;
+	protected LocalDataService localDataService;
+	protected ImportController importController;
 
 	public FormatService getFormatService() {
 		if (formatService == null) {
@@ -81,6 +85,13 @@ public class ServiceFactory {
 		return mainExportController;
 	}
 
+	public ImportController getImportController() {
+		if (importController == null) {
+			importController = initializeImportController();
+		}
+		return importController;
+	}
+
 	public DateService getDateService() {
 		if (dateService == null) {
 			dateService = initializeDateService();
@@ -101,6 +112,13 @@ public class ServiceFactory {
 
 		return mainOutputService;
 
+	}
+
+	public LocalDataService getLocalDataService() {
+		if (localDataService == null) {
+			localDataService = new LocalDataService();
+		}
+		return localDataService;
 	}
 
 	protected MainOutputService initializeMainOutputService() {
@@ -126,13 +144,23 @@ public class ServiceFactory {
 		MainExportController exportController = new MainExportController();
 
 		exportController.setEntryService(getEntryService());
-		exportController.setExportableService(getExportableService());
 		exportController.setFormatService(getFormatService());
 		exportController.setObjectFactory(getObjectFactory());
 		exportController.setIssueWriter(getObjectFactory().buildIssueWriter());
 		exportController.setMainOutputService(getMainOutputService());
+		exportController.setLocalDataService(getLocalDataService());
+		exportController.setImportController(getImportController());
 
 		return exportController;
+	}
+
+	protected ImportController initializeImportController() {
+		ImportController importCont = new ImportController();
+		importCont.setExportableService(getExportableService());
+		importCont.setLocalDataService(getLocalDataService());
+		importCont.setMainOutputService(getMainOutputService());
+		importCont.setObjectFactory(getObjectFactory());
+		return importCont;
 	}
 
 }
